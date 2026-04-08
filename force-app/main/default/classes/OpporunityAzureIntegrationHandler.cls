@@ -1,10 +1,10 @@
 public class OpporunityAzureIntegrationHandler {
-    // private static final String AUTH_URL = System.Label.Digital_Layer_AUTH_URL;
-    // private static final String CLIENT_ID = System.Label.Digital_Layer_CLIENT_ID;
-    // private static final String CLIENT_SECRET = System.Label.Digital_Layer_CLIENT_SECRET;
-    // private static final String SCOPE = System.Label.Digital_Layer_SCOPE;
-    // private static final String FUNCTION_APP_URL = System.Label.Digital_Layer_FUNCTION_APP_URL;
-    // private static final Integer REQUEST_TIMEOUT = 30000; // Set timeout to 30 seconds
+    private static final String AUTH_URL = System.Label.Digital_Layer_AUTH_URL;
+    private static final String CLIENT_ID = System.Label.Digital_Layer_CLIENT_ID;
+    private static final String CLIENT_SECRET = System.Label.Digital_Layer_CLIENT_SECRET;
+    private static final String SCOPE = System.Label.Digital_Layer_SCOPE;
+    private static final String FUNCTION_APP_URL = System.Label.Digital_Layer_FUNCTION_APP_URL;
+    private static final Integer REQUEST_TIMEOUT = 30000; // Set timeout to 30 seconds
 
     // Authenticate with Azure
     public static String authenticateWithAzure() {
