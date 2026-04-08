@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Opportunity Approved Notification</name>
+    <style>none</style>
+    <subject>Opportunity Approved Notification</subject>
+    <textOnly>Syngene
+
+Dear {!User.FirstName},
+
+This is to inform you that your opportunity {!Opportunity.Name} has been approved !
+
+Comments : Overall account size is meaningful
+
+Please click on the opportunity link to proceed:
+{!Opportunity.Name}
+
+Regards,
+Salesforce Team</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,1031 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_Approval_Status</name>
+        <label>Check Approval Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isApproved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Approval_Step_One.Outputs.approvalDecision</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approve</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Approved_Status</targetReference>
+            </connector>
+            <label>isApproved</label>
+        </rules>
+        <rules>
+            <name>isRejected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Approval_Step_One.Outputs.approvalDecision</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reject</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_2_of_Update_Approved_Status</targetReference>
+            </connector>
+            <label>isRejected</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Copy_1_of_Copy_2_of_Check_Approval_Status</name>
+        <label>Copy 1 of Copy 2 of Check Approval Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Copy_1_of_Copy_2_of_isApproved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Step_One_For_Head_three.Outputs.approvalDecision</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approve</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Copy_1_of_Update_Approved_Status</targetReference>
+            </connector>
+            <label>Copy 1 of Copy 2 of isApproved</label>
+        </rules>
+        <rules>
+            <name>Copy_1_of_Copy_2_of_isRejected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Step_One_For_Head_three.Outputs.approvalDecision</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reject</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Copy_3_of_Update_Approved_Status</targetReference>
+            </connector>
+            <label>Copy 1 of Copy 2 of isRejected</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Copy_2_of_Check_Approval_Status</name>
+        <label>Copy 2 of Check Approval Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Copy_2_of_isApproved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Approval_Step_one_for_Head_Two.Outputs.approvalDecision</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approve</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Update_Approved_Status</targetReference>
+            </connector>
+            <label>Copy 2 of isApproved</label>
+        </rules>
+        <rules>
+            <name>Copy_2_of_isRejected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Approval_Step_one_for_Head_Two.Outputs.approvalDecision</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reject</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_3_of_Update_Approved_Status</targetReference>
+            </connector>
+            <label>Copy 2 of isRejected</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Decision_to_evaluate_entry_criteria_before_sending_for_approval</name>
+        <label>Decision to evaluate entry criteria before sending for approval</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Decision_For_Head1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Converted_Currency_in_USD__c</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>20000.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Portfolio__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Discovery</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Is_Top_25_Account__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Company_Size__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Large Pharma</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Company_Size__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Mid Sized Pharma</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Discovery_Biology__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>DMPK</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Safety_Assessment__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Toxicology</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SynVent_Dropdown__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>DMPK</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SynVent_Dropdown__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Toxicology</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Discovery_Chemistry_Check__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetUserRecords</targetReference>
+            </connector>
+            <label>Decision For Head1</label>
+        </rules>
+        <rules>
+            <name>Decision_For_Head_Two</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Portfolio__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Discovery</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Discovery_Chemistry_Check__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Discovery_Biology__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>DMPK</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Safety_Assessment__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Toxicology</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SynVent_Dropdown__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>DMPK</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SynVent_Dropdown__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Toxicology</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Converted_Currency_in_USD__c</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>20000.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Company_Size__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Large Pharma</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Company_Size__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Mid Sized Pharma</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Is_Top_25_Account__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_GetUserRecords</targetReference>
+            </connector>
+            <label>Decision For Head Two</label>
+        </rules>
+        <rules>
+            <name>Decision_For_Head_Three</name>
+            <conditionLogic>( 1 OR 2 ) AND 3 AND 4 AND 5 AND 6</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Portfolio__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Development</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Portfolio__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Biologics</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Converted_Currency_in_USD__c</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>20000.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Company_Size__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Mid Sized Pharma</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Company_Size__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Large Pharma</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Is_Top_25_Account__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_2_of_GetUserRecords</targetReference>
+            </connector>
+            <label>Decision For Head Three</label>
+        </rules>
+    </decisions>
+    <description>This flow outlines the approval process for Opportunities based on specified criteria, triggered whenever an Opportunity is created or updated.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>SalesHeadUsername2</name>
+        <dataType>String</dataType>
+        <expression>{!Copy_1_of_Get_user_Step_one.Outputs.UserName}</expression>
+    </formulas>
+    <formulas>
+        <name>username</name>
+        <dataType>String</dataType>
+        <expression>{!Get_user_Step_one.Outputs.UserName}</expression>
+    </formulas>
+    <formulas>
+        <name>userNameThree</name>
+        <dataType>String</dataType>
+        <expression>{!Copy_2_of_Get_user_Step_one.Outputs.UserName}</expression>
+    </formulas>
+    <interviewLabel>RTF:Approval Process on Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RTF:Approval Process on Opportunity</label>
+    <orchestratedStages>
+        <name>Approval_Step_For_Head_One</name>
+        <label>Approval Step For Head One</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Approval_Status</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Approval_Step_One</name>
+            <actionName>standard_approvals__EvaluateApproval</actionName>
+            <actionType>stepApproval</actionType>
+            <assignees>
+                <assignee>
+                    <elementReference>username</elementReference>
+                </assignee>
+                <assigneeType>Resource</assigneeType>
+            </assignees>
+            <canAssigneeEdit>true</canAssigneeEdit>
+            <debugSimulateStep>true</debugSimulateStep>
+            <entryConditionLogic>and</entryConditionLogic>
+            <exitConditionLogic>and</exitConditionLogic>
+            <inputParameters>
+                <name>ActionInput__RecordId</name>
+                <value>
+                    <elementReference>$Record.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>ActionInput__CustomEmailSubject</name>
+                <value>
+                    <elementReference>Subject</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>ActionInput__CustomEmailBody</name>
+                <value>
+                    <elementReference>body</elementReference>
+                </value>
+            </inputParameters>
+            <label>Approval Step One</label>
+            <outputConfigParams>
+                <name>approvalComments</name>
+                <value>
+                    <stringValue>test</stringValue>
+                </value>
+            </outputConfigParams>
+            <outputConfigParams>
+                <name>approvalDecision</name>
+                <value>
+                    <stringValue>Approve</stringValue>
+                </value>
+            </outputConfigParams>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <runAsUser>false</runAsUser>
+            <shouldLock>true</shouldLock>
+            <stepSubtype>ApprovalStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Approval_Step_for_Head_Three</name>
+        <label>Approval Step for Head Three</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Copy_1_of_Copy_2_of_Check_Approval_Status</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Step_One_For_Head_three</name>
+            <actionName>standard_approvals__EvaluateApproval</actionName>
+            <actionType>stepApproval</actionType>
+            <assignees>
+                <assignee>
+                    <elementReference>userNameThree</elementReference>
+                </assignee>
+                <assigneeType>Resource</assigneeType>
+            </assignees>
+            <canAssigneeEdit>true</canAssigneeEdit>
+            <debugSimulateStep>false</debugSimulateStep>
+            <entryConditionLogic>and</entryConditionLogic>
+            <exitConditionLogic>and</exitConditionLogic>
+            <inputParameters>
+                <name>ActionInput__RecordId</name>
+                <value>
+                    <elementReference>$Record.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>ActionInput__CustomEmailSubject</name>
+                <value>
+                    <elementReference>Subject</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>ActionInput__CustomEmailBody</name>
+                <value>
+                    <elementReference>bodyThree</elementReference>
+                </value>
+            </inputParameters>
+            <label>Step One For Head three</label>
+            <outputConfigParams>
+                <name>approvalComments</name>
+                <value xsi:nil="true"/>
+            </outputConfigParams>
+            <outputConfigParams>
+                <name>approvalDecision</name>
+                <value xsi:nil="true"/>
+            </outputConfigParams>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <runAsUser>false</runAsUser>
+            <shouldLock>true</shouldLock>
+            <stepSubtype>ApprovalStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Approval_Step_For_Head_Two</name>
+        <label>Approval Step For Head Two</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Copy_2_of_Check_Approval_Status</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Approval_Step_one_for_Head_Two</name>
+            <actionName>standard_approvals__EvaluateApproval</actionName>
+            <actionType>stepApproval</actionType>
+            <assignees>
+                <assignee>
+                    <elementReference>SalesHeadUsername2</elementReference>
+                </assignee>
+                <assigneeType>Resource</assigneeType>
+            </assignees>
+            <canAssigneeEdit>true</canAssigneeEdit>
+            <debugSimulateStep>false</debugSimulateStep>
+            <entryConditionLogic>and</entryConditionLogic>
+            <exitConditionLogic>and</exitConditionLogic>
+            <inputParameters>
+                <name>ActionInput__RecordId</name>
+                <value>
+                    <elementReference>$Record.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>ActionInput__CustomEmailSubject</name>
+                <value>
+                    <elementReference>Subject</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>ActionInput__CustomEmailBody</name>
+                <value>
+                    <elementReference>BodyTwo</elementReference>
+                </value>
+            </inputParameters>
+            <label>Approval Step one for Head Two</label>
+            <outputConfigParams>
+                <name>approvalComments</name>
+                <value xsi:nil="true"/>
+            </outputConfigParams>
+            <outputConfigParams>
+                <name>approvalDecision</name>
+                <value xsi:nil="true"/>
+            </outputConfigParams>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <runAsUser>false</runAsUser>
+            <shouldLock>true</shouldLock>
+            <stepSubtype>ApprovalStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Copy_1_of_Copy_1_of_Update_Approved_Status</name>
+        <label>Copy 1 of Copy 1 of Update Approved Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Copy_1_of_Copy_1_of_Update_Approve_Status_by_calling_Subflow</name>
+            <actionName>ALF_Opportunity_Approved_Status_Updation</actionName>
+            <actionType>stepBackground</actionType>
+            <canAssigneeEdit>false</canAssigneeEdit>
+            <debugSimulateStep>false</debugSimulateStep>
+            <entryConditionLogic>and</entryConditionLogic>
+            <exitConditionLogic>and</exitConditionLogic>
+            <inputParameters>
+                <name>Comments</name>
+                <value>
+                    <elementReference>Step_One_For_Head_three.Outputs.approvalComments</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>Status</name>
+                <value>
+                    <stringValue>Approved</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>$Record.Id</elementReference>
+                </value>
+            </inputParameters>
+            <label>Copy 1 of Copy 1 of Update Approve Status by calling Subflow</label>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <runAsUser>false</runAsUser>
+            <shouldLock>false</shouldLock>
+            <stepSubtype>BackgroundStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Copy_1_of_Copy_3_of_Update_Approved_Status</name>
+        <label>Copy 1 of Copy 3 of Update Approved Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Copy_1_of_Copy_3_of_Update_Approve_Status_by_calling_Subflow</name>
+            <actionName>ALF_Opportunity_Approved_Status_Updation</actionName>
+            <actionType>stepBackground</actionType>
+            <canAssigneeEdit>false</canAssigneeEdit>
+            <debugSimulateStep>false</debugSimulateStep>
+            <entryConditionLogic>and</entryConditionLogic>
+            <exitConditionLogic>and</exitConditionLogic>
+            <inputParameters>
+                <name>Comments</name>
+                <value>
+                    <elementReference>Step_One_For_Head_three.Outputs.approvalComments</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>Status</name>
+                <value>
+                    <stringValue>Rejected</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>$Record.Id</elementReference>
+                </value>
+            </inputParameters>
+            <label>Copy 1 of Copy 3 of Update Approve Status by calling Subflow</label>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <runAsUser>false</runAsUser>
+            <shouldLock>false</shouldLock>
+            <stepSubtype>BackgroundStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Copy_1_of_GetUserRecords</name>
+        <label>Copy 1 of GetUserRecords</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Approval_Step_For_Head_Two</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Copy_1_of_Get_user_Step_one</name>
+            <actionName>ALF_Getting_Users_Based_on_User_Name</actionName>
+            <actionType>stepBackground</actionType>
+            <canAssigneeEdit>false</canAssigneeEdit>
+            <debugSimulateStep>false</debugSimulateStep>
+            <entryConditionLogic>and</entryConditionLogic>
+            <exitConditionLogic>and</exitConditionLogic>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>$Label.SalesHeadTwoUserName</elementReference>
+                </value>
+            </inputParameters>
+            <label>Copy 1 of Get user Step one</label>
+            <outputConfigParams>
+                <name>UserRecord</name>
+                <value xsi:nil="true"/>
+            </outputConfigParams>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <runAsUser>false</runAsUser>
+            <shouldLock>false</shouldLock>
+            <stepSubtype>BackgroundStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Copy_1_of_Update_Approved_Status</name>
+        <label>Copy 1 of Update Approved Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Copy_1_of_Update_Approve_Status_by_calling_Subflow</name>
+            <actionName>ALF_Opportunity_Approved_Status_Updation</actionName>
+            <actionType>stepBackground</actionType>
+            <canAssigneeEdit>false</canAssigneeEdit>
+            <debugSimulateStep>false</debugSimulateStep>
+            <entryConditionLogic>and</entryConditionLogic>
+            <exitConditionLogic>and</exitConditionLogic>
+            <inputParameters>
+                <name>Comments</name>
+                <value>
+                    <elementReference>Approval_Step_one_for_Head_Two.Outputs.approvalComments</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>Status</name>
+                <value>
+                    <stringValue>Approved</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>$Record.Id</elementReference>
+                </value>
+            </inputParameters>
+            <label>Copy 1 of Update Approve Status by calling Subflow</label>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <runAsUser>false</runAsUser>
+            <shouldLock>false</shouldLock>
+            <stepSubtype>BackgroundStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Copy_2_of_GetUserRecords</name>
+        <label>Copy 2 of GetUserRecords</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Approval_Step_for_Head_Three</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Copy_2_of_Get_user_Step_one</name>
+            <actionName>ALF_Getting_Users_Based_on_User_Name</actionName>
+            <actionType>stepBackground</actionType>
+            <canAssigneeEdit>false</canAssigneeEdit>
+            <debugSimulateStep>false</debugSimulateStep>
+            <entryConditionLogic>and</entryConditionLogic>
+            <exitConditionLogic>and</exitConditionLogic>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>$Label.SalesHeadThreeUserName</elementReference>
+                </value>
+            </inputParameters>
+            <label>Copy 2 of Get user Step one</label>
+            <outputConfigParams>
+                <name>UserRecord</name>
+                <value xsi:nil="true"/>
+            </outputConfigParams>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <runAsUser>false</runAsUser>
+            <shouldLock>false</shouldLock>
+            <stepSubtype>BackgroundStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Copy_2_of_Update_Approved_Status</name>
+        <label>Copy 2 of Update Approved Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Copy_2_of_Update_Approve_Status_by_calling_Subflow</name>
+            <actionName>ALF_Opportunity_Approved_Status_Updation</actionName>
+            <actionType>stepBackground</actionType>
+            <canAssigneeEdit>false</canAssigneeEdit>
+            <debugSimulateStep>false</debugSimulateStep>
+            <entryConditionLogic>and</entryConditionLogic>
+            <exitConditionLogic>and</exitConditionLogic>
+            <inputParameters>
+                <name>Comments</name>
+                <value>
+                    <elementReference>Approval_Step_One.Outputs.approvalComments</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>Status</name>
+                <value>
+                    <stringValue>Rejected</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>$Record.Id</elementReference>
+                </value>
+            </inputParameters>
+            <label>Copy 2 of Update Approve Status by calling Subflow</label>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <runAsUser>false</runAsUser>
+            <shouldLock>false</shouldLock>
+            <stepSubtype>BackgroundStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Copy_3_of_Update_Approved_Status</name>
+        <label>Copy 3 of Update Approved Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Copy_3_of_Update_Approve_Status_by_calling_Subflow</name>
+            <actionName>ALF_Opportunity_Approved_Status_Updation</actionName>
+            <actionType>stepBackground</actionType>
+            <canAssigneeEdit>false</canAssigneeEdit>
+            <debugSimulateStep>false</debugSimulateStep>
+            <entryConditionLogic>and</entryConditionLogic>
+            <exitConditionLogic>and</exitConditionLogic>
+            <inputParameters>
+                <name>Comments</name>
+                <value>
+                    <elementReference>Approval_Step_one_for_Head_Two.Outputs.approvalComments</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>Status</name>
+                <value>
+                    <stringValue>Rejected</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>$Record.Id</elementReference>
+                </value>
+            </inputParameters>
+            <label>Copy 3 of Update Approve Status by calling Subflow</label>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <runAsUser>false</runAsUser>
+            <shouldLock>false</shouldLock>
+            <stepSubtype>BackgroundStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>GetUserRecords</name>
+        <label>GetUserRecords</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Approval_Step_For_Head_One</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Get_user_Step_one</name>
+            <actionName>ALF_Getting_Users_Based_on_User_Name</actionName>
+            <actionType>stepBackground</actionType>
+            <canAssigneeEdit>false</canAssigneeEdit>
+            <debugSimulateStep>false</debugSimulateStep>
+            <entryConditionLogic>and</entryConditionLogic>
+            <exitConditionLogic>and</exitConditionLogic>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>$Label.SalesHeadOneUsername</elementReference>
+                </value>
+            </inputParameters>
+            <label>Get user Step one</label>
+            <outputConfigParams>
+                <name>UserRecord</name>
+                <value xsi:nil="true"/>
+            </outputConfigParams>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <runAsUser>false</runAsUser>
+            <shouldLock>false</shouldLock>
+            <stepSubtype>BackgroundStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Update_Approved_Status</name>
+        <label>Update Approved Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Update_Approve_Status_by_calling_Subflow</name>
+            <actionName>ALF_Opportunity_Approved_Status_Updation</actionName>
+            <actionType>stepBackground</actionType>
+            <canAssigneeEdit>false</canAssigneeEdit>
+            <debugSimulateStep>true</debugSimulateStep>
+            <entryConditionLogic>and</entryConditionLogic>
+            <exitConditionLogic>and</exitConditionLogic>
+            <inputParameters>
+                <name>Comments</name>
+                <value>
+                    <elementReference>Approval_Step_One.Outputs.approvalComments</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>Status</name>
+                <value>
+                    <stringValue>Approved</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>$Record.Id</elementReference>
+                </value>
+            </inputParameters>
+            <label>Update Approve Status by calling Subflow</label>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <runAsUser>false</runAsUser>
+            <shouldLock>false</shouldLock>
+            <stepSubtype>BackgroundStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>ApprovalWorkflow</processType>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Decision_to_evaluate_entry_criteria_before_sending_for_approval</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Amount</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <numberValue>20000.0</numberValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Opportunity_Approval_Status__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <pathType>ApprovalRecall</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>body</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;div style=&quot;font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e1e1e1; border-radius: 8px;&quot;&gt;
+    
+    &lt;div style=&quot;text-align: center; margin-bottom: 20px;&quot;&gt;
+        &lt;h2 style=&quot;color: #1f4e79; margin: 0; padding-bottom: 10px; font-size: 24px;&quot;&gt;Syngene&lt;/h2&gt;
+        &lt;hr style=&quot;border: 0; border-top: 2px solid #6a5acd; width: 100%;&quot; /&gt;
+    &lt;/div&gt;
+
+    &lt;div style=&quot;padding: 10px 0;&quot;&gt;
+        &lt;p style=&quot;margin-bottom: 15px;&quot;&gt;Dear &lt;strong&gt;{!Get_user_Step_one.Outputs.FullName}&lt;/strong&gt;,&lt;/p&gt;
+        
+        &lt;p style=&quot;margin-bottom: 15px;&quot;&gt;
+            This is to inform you that an opportunity &lt;strong&gt;{!$Record.Name}&lt;/strong&gt; has been created under account &lt;strong&gt;{!$Record.Account.Name}&lt;/strong&gt; by {!$Record.Owner.Name}.
+        &lt;/p&gt;
+
+        &lt;p style=&quot;background-color: #f9f9f9; padding: 15px; border-left: 4px solid #1f4e79; margin: 20px 0;&quot;&gt;
+            &lt;strong&gt;Opportunity Value:&lt;/strong&gt; {!$Record.Converted_Currency_in_USD__c}
+        &lt;/p&gt;
+
+        &lt;p style=&quot;margin-bottom: 15px;&quot;&gt;
+            Kindly review the opportunity and take the necessary action by approving or rejecting it. 
+            Please ensure to add your comments while making the decision.
+        &lt;/p&gt;
+
+        &lt;div style=&quot;text-align: center; margin: 30px 0;&quot;&gt;
+            &lt;a href=&quot;{!$Label.BaseURL}{!$Record.Id}&quot; 
+               style=&quot;background-color: #6a5acd; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;&quot;&gt;
+               View Record
+            &lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div style=&quot;margin-top: 20px; padding-top: 15px; border-top: 1px solid #eeeeee; font-size: 12px; color: #777;&quot;&gt;
+        &lt;p style=&quot;margin: 0;&quot;&gt;Regards,&lt;/p&gt;
+        &lt;p style=&quot;margin: 0; font-weight: bold;&quot;&gt;Salesforce Team&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>bodyThree</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;div style=&quot;font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e1e1e1; border-radius: 8px;&quot;&gt;
+    
+    &lt;div style=&quot;text-align: center; margin-bottom: 20px;&quot;&gt;
+        &lt;h2 style=&quot;color: #1f4e79; margin: 0; padding-bottom: 10px; font-size: 24px;&quot;&gt;Syngene&lt;/h2&gt;
+        &lt;hr style=&quot;border: 0; border-top: 2px solid #6a5acd; width: 100%;&quot; /&gt;
+    &lt;/div&gt;
+
+    &lt;div style=&quot;padding: 10px 0;&quot;&gt;
+        &lt;p style=&quot;margin-bottom: 15px;&quot;&gt;Dear &lt;strong&gt;{!Copy_2_of_Get_user_Step_one.Outputs.FullName}&lt;/strong&gt;,&lt;/p&gt;
+        
+        &lt;p style=&quot;margin-bottom: 15px;&quot;&gt;
+            This is to inform you that an opportunity &lt;strong&gt;{!$Record.Name}&lt;/strong&gt; has been created under account &lt;strong&gt;{!$Record.Account.Name}&lt;/strong&gt; by {!$Record.Owner.Name}.
+        &lt;/p&gt;
+
+        &lt;p style=&quot;background-color: #f9f9f9; padding: 15px; border-left: 4px solid #1f4e79; margin: 20px 0;&quot;&gt;
+            &lt;strong&gt;Opportunity Value:&lt;/strong&gt; {!$Record.Converted_Currency_in_USD__c}
+        &lt;/p&gt;
+
+        &lt;p style=&quot;margin-bottom: 15px;&quot;&gt;
+            Kindly review the opportunity and take the necessary action by approving or rejecting it. 
+            Please ensure to add your comments while making the decision.
+        &lt;/p&gt;
+
+        &lt;div style=&quot;text-align: center; margin: 30px 0;&quot;&gt;
+            &lt;a href=&quot;{!$Label.BaseURL}{!$Record.Id}&quot; 
+               style=&quot;background-color: #6a5acd; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;&quot;&gt;
+               View Record
+            &lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div style=&quot;margin-top: 20px; padding-top: 15px; border-top: 1px solid #eeeeee; font-size: 12px; color: #777;&quot;&gt;
+        &lt;p style=&quot;margin: 0;&quot;&gt;Regards,&lt;/p&gt;
+        &lt;p style=&quot;margin: 0; font-weight: bold;&quot;&gt;Salesforce Team&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>BodyTwo</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;div style=&quot;font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e1e1e1; border-radius: 8px;&quot;&gt;
+    
+    &lt;div style=&quot;text-align: center; margin-bottom: 20px;&quot;&gt;
+        &lt;h2 style=&quot;color: #1f4e79; margin: 0; padding-bottom: 10px; font-size: 24px;&quot;&gt;Syngene&lt;/h2&gt;
+        &lt;hr style=&quot;border: 0; border-top: 2px solid #6a5acd; width: 100%;&quot; /&gt;
+    &lt;/div&gt;
+
+    &lt;div style=&quot;padding: 10px 0;&quot;&gt;
+        &lt;p style=&quot;margin-bottom: 15px;&quot;&gt;Dear &lt;strong&gt;{!Copy_1_of_Get_user_Step_one.Outputs.FullName}&lt;/strong&gt;,&lt;/p&gt;
+        
+        &lt;p style=&quot;margin-bottom: 15px;&quot;&gt;
+            This is to inform you that an opportunity &lt;strong&gt;{!$Record.Name}&lt;/strong&gt; has been created under account &lt;strong&gt;{!$Record.Account.Name}&lt;/strong&gt; by {!$Record.Owner.Name}.
+        &lt;/p&gt;
+
+        &lt;p style=&quot;background-color: #f9f9f9; padding: 15px; border-left: 4px solid #1f4e79; margin: 20px 0;&quot;&gt;
+            &lt;strong&gt;Opportunity Value:&lt;/strong&gt; {!$Record.Converted_Currency_in_USD__c}
+        &lt;/p&gt;
+
+        &lt;p style=&quot;margin-bottom: 15px;&quot;&gt;
+            Kindly review the opportunity and take the necessary action by approving or rejecting it. 
+            Please ensure to add your comments while making the decision.
+        &lt;/p&gt;
+
+        &lt;div style=&quot;text-align: center; margin: 30px 0;&quot;&gt;
+            &lt;a href=&quot;{!$Label.BaseURL}{!$Record.Id}&quot; 
+               style=&quot;background-color: #6a5acd; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;&quot;&gt;
+               View Record
+            &lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div style=&quot;margin-top: 20px; padding-top: 15px; border-top: 1px solid #eeeeee; font-size: 12px; color: #777;&quot;&gt;
+        &lt;p style=&quot;margin: 0;&quot;&gt;Regards,&lt;/p&gt;
+        &lt;p style=&quot;margin: 0; font-weight: bold;&quot;&gt;Salesforce Team&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Subject</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Opportunity Approval Request – {!$Record.Name}</text>
+    </textTemplates>
+</Flow>
