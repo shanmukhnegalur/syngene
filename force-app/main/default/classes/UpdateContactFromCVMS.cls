@@ -134,14 +134,13 @@ global class UpdateContactFromCVMS
                     processedEmails.add(data.EmailId);
                 }
             }
-            if (!contactsToUpdate.isEmpty())
-            {
-                if (!leadConverts.isEmpty())
+             if (!leadConverts.isEmpty())
                 {
                     List<Database.LeadConvertResult> lcResults = Database.convertLead(leadConverts);
                     
                     for (Integer i = 0; i < lcResults.size(); i++)
                     {
+                        
                         if (lcResults[i].isSuccess())
                         {
                             responseList.add(new ResponseWrapper(
@@ -158,6 +157,9 @@ global class UpdateContactFromCVMS
                         }
                     }
                 }
+            if (!contactsToUpdate.isEmpty())
+            {
+               
                 List<DataBase.UpsertResult> saveResults = DataBase.Upsert(contactsToUpdate,Contact.External_Id__c,false);
                 for (Integer i = 0; i < saveResults.size(); i++)
                 {
